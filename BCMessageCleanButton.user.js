@@ -1,21 +1,3 @@
-// ==UserScript==
-// @name         聊天室清理按鈕
-// @namespace    https://chat.openai.com/
-// @version      1.3
-// @description  可拖曳的聊天室清理按鈕，功能與原版剪刀相同（保留 20 條訊息）
-// @author       約爾
-// @match        https://bondageprojects.elementfx.com/*
-// @match        https://www.bondageprojects.elementfx.com/*
-// @match        https://bondage-europe.com/*
-// @match        https://www.bondage-europe.com/*
-// @match        https://bondageprojects.com/*
-// @match        https://www.bondageprojects.com/*
-// @match        https://www.bondage-asia.com/*
-// @icon         https://i.postimg.cc/PxgYLZcm/image.png
-// @grant        none
-// ==/UserScript==
-/* global CurrentScreen, MainRun, bcModSdk */
-
 
 
 //SDK
@@ -182,3 +164,4 @@ var bcModSdk=function(){"use strict";const o="1.2.0";function e(o){alert("Mod ER
         return oldRun.apply(this, args);
     };
 })();
+
