@@ -36,7 +36,7 @@ var bcModSdk=function(){"use strict";const o="1.2.0";function e(o){alert("Mod ER
 
         btn = document.createElement("button");
         btn.id = "clearChatBtn";
-        btn.textContent = "✂";
+        btn.textContent = "↺";
         btn.style.position = "fixed";
         btn.style.bottom = "20px";
         btn.style.left = "20px";
@@ -164,4 +164,5 @@ var bcModSdk=function(){"use strict";const o="1.2.0";function e(o){alert("Mod ER
         return oldRun.apply(this, args);
     };
 })();
+
 
