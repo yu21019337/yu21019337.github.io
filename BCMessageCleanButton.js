@@ -74,53 +74,35 @@ var bcModSdk=function(){"use strict";const o="1.2.0";function e(o){alert("Mod ER
         }
 
        // 按鈕點擊：清理訊息
-btn.addEventListener("click", (event) => {
-    if (hasMoved) return; // 拖曳不觸發
-    const log = document.querySelector("#TextAreaChatLog");
-    if (!log) return console.warn("找不到 #TextAreaChatLog 容器");
+    btn.addEventListener("click", (event) => {
+        if (hasMoved) return; // 拖曳不觸發
+        const log = document.querySelector("#TextAreaChatLog");
+        if (!log) return console.warn("找不到 #TextAreaChatLog 容器");
 
-    const roomSeps = document.querySelectorAll("#TextAreaChatLog .chat-room-sep");
+        const roomSeps = document.querySelectorAll("#TextAreaChatLog .chat-room-sep");
 
-    if (roomSeps.length > 0) {
-        // 有 room separator 的情況
-        switch (roomSeps.length) {
-            case 1: {
-                // 一個分隔線：保留當前房間的 20 條訊息
-                const roomSep = roomSeps[0];
-                const parent = roomSep.parentElement;
-                while (roomSep.nextSibling && parent.childElementCount > 20) {
-                    parent.removeChild(roomSep.nextSibling);
-                }
-                break;
+        if (roomSeps.length > 0) {
+            // 不論多少個 room separator，都只保留最後一個
+            const roomSep = roomSeps[roomSeps.length - 1];
+            const parent = roomSep.parentElement;
+            while (roomSep.previousSibling) {
+                parent.removeChild(roomSep.previousSibling);
             }
-            default: {
-                // 多個分隔線：移除第一個房間的內容
-                // 如果 shift 被按住 → 移除最後一個房間以外的所有
-                const roomSep = event.shiftKey
-                    ? roomSeps[roomSeps.length - 1]
-                    : roomSeps[1];
-                const parent = roomSep.parentElement;
-                while (roomSep.previousSibling) {
-                    parent.removeChild(roomSep.previousSibling);
+        } else {
+            // 沒有 room separator → 原本的保留 20 條訊息版本
+            const children = Array.from(log.children);
+            const excess = children.length - 20;
+            if (excess > 0) {
+                for (let i = 0; i < excess; i++) {
+                    log.removeChild(children[i]);
                 }
-                break;
             }
         }
-    } else {
-        // 沒有 room separator → 原本的保留 20 條訊息版本
-        const children = Array.from(log.children);
-        const excess = children.length - 20;
-        if (excess > 0) {
-            for (let i = 0; i < excess; i++) {
-                log.removeChild(children[i]);
-            }
-        }
-    }
 
-    // 滾動到底部
-    ElementScrollToEnd("TextAreaChatLog");
-    console.log("訊息清理完成，只保留最新 20 條訊息！");
-});
+        // 滾動到底部
+        ElementScrollToEnd("TextAreaChatLog");
+        console.log("訊息清理完成，只保留最新 20 條訊息！");
+    });
 
         // 滑鼠事件：開始拖曳
         btn.addEventListener("mousedown", (e) => {
@@ -195,5 +177,6 @@ btn.addEventListener("click", (event) => {
         return oldRun.apply(this, args);
     };
 })();
+
 
 
