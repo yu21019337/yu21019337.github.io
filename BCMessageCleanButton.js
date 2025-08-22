@@ -82,12 +82,20 @@ var bcModSdk=function(){"use strict";const o="1.2.0";function e(o){alert("Mod ER
         const roomSeps = document.querySelectorAll("#TextAreaChatLog .chat-room-sep");
 
         if (roomSeps.length > 0) {
-            // 不論多少個 room separator，都只保留最後一個
+            // 不論多少個 room separator，都只保留最後一個，並保留 20 條訊息
             const roomSep = roomSeps[roomSeps.length - 1];
             const parent = roomSep.parentElement;
-            while (roomSep.previousSibling) {
-                parent.removeChild(roomSep.previousSibling);
+
+            // 移除最後一個分隔線之前的所有內容
+        while (roomSep.previousSibling) {
+            parent.removeChild(roomSep.previousSibling);
+        }
+
+        // 再保留最後 20 條訊息
+            while (parent.childElementCount > 21) { // 20 訊息 + 1 分隔線
+                parent.removeChild(roomSep.nextSibling);
             }
+
         } else {
             // 沒有 room separator → 原本的保留 20 條訊息版本
             const children = Array.from(log.children);
@@ -177,6 +185,7 @@ var bcModSdk=function(){"use strict";const o="1.2.0";function e(o){alert("Mod ER
         return oldRun.apply(this, args);
     };
 })();
+
 
 
 
